@@ -8,11 +8,11 @@
 <h4 style="font-family:Elephant">Fill the Following Details</h4>
 
 <label>First Name</label>
-<input type="text" id="firstname" name="FirstName" class="form-control" />
+<input type="text" id="firstname" name="FirstName" class="form-control" required/>
 <br />
 
 <label>Last Name</label>
-<input type="text" id="lastname" name="LastName" class="form-control" />
+<input type="text" id="lastname" name="LastName" class="form-control" required/>
 <br />
 
 <label>Gender</label>
@@ -23,7 +23,7 @@
 <br />
 
 <label>Email Id</label>
-<input type="text" id="email" name="Email" class="form-control" />
+<input type="text" id="email" name="Email" class="form-control" required/>
 <br />
 
 <label>Skills</label>
@@ -69,8 +69,7 @@
     <script>
         function save() {
 
-            $("#tbl").css("display", "block");
-            $("#tblname").css("display", "block");
+           
             var selectedGender = $("input[name='gender']:checked").val();
 
             var selectedvalue = [];
@@ -83,7 +82,7 @@
                 LastName: $("#lastname").val(),
                 Gender: selectedGender,
                 Email: $("#email").val(),
-                Skills: selectedvals,
+                Skills: selectedvalue,
             };
 
             $.ajax({
@@ -94,6 +93,10 @@
                 success: function (resp) {
 
                     if (resp.msg == 'success') {
+
+                        $("#tbl").css("display", "block");
+                        $("#tblname").css("display", "block");
+
                         var td1 = resp.data.FirstName;
                         $("#td1").append(td1 + '<br/>');
 
