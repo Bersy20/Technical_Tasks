@@ -1,0 +1,129 @@
+﻿@model EmployeeAjaxTask.Models.EmpDetails
+@{
+    ViewBag.Title = "Employee Info";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<h4 style="font-family:Elephant">Fill the Following Details</h4>
+
+<label>First Name</label>
+<input type="text" id="firstname" name="FirstName" class="form-control" />
+<br />
+
+<label>Last Name</label>
+<input type="text" id="lastname" name="LastName" class="form-control" />
+<br />
+
+<label>Gender</label>
+<br />
+<input type="radio" id="female" name="gender" value="Female" /> Female
+<input type="radio" id="male" name="gender" value="Male" /> Male
+<br />
+<br />
+
+<label>Email Id</label>
+<input type="text" id="email" name="Email" class="form-control" />
+<br />
+
+<label>Skills</label>
+<br />
+<input type="checkbox" id="mvc" name="MVC" class="skill" value="MVC" /> MVC
+<br />
+<input type="checkbox" id="jquery" name="JQuery" class="skill" value="JQuery" /> JQuery
+<br />
+<input type="checkbox" id="ajax" name="AJAX" class="skill" value="AJAX" /> AJAX
+<br />
+<br />
+<input type="button" id="savebtn" name="Savebtn" value="Save" onclick="save()" />
+<br />
+<br />
+
+<h4 id="tblname" style="display:none;font-family:Elephant">Employee Details</h4>
+<table id="tbl" style="display:none" class="table">
+
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Email</th>
+        <th>Skills</th>
+
+    </tr>
+    <tr>
+        <td id="td1">
+        </td>
+        <td id="td2">
+        </td>
+        <td id="td3">
+        </td>
+        <td id="td4">
+        </td>
+        <td id="td5">
+        </td>
+
+    </tr>
+</table>
+
+@section scripts{
+    <script>
+        function save() {
+
+            $("#tbl").css("display", "block");
+            $("#tblname").css("display", "block");
+            var selectedGender = $("input[name='gender']:checked").val();
+
+            var selectedvalue = [];
+            $(".skill:checked").each(function (item) {
+                selectedvalue.push(this.value);
+            });
+
+            var obj = {
+                FirstName: $("#firstname").val(),
+                LastName: $("#lastname").val(),
+                Gender: selectedGender,
+                Email: $("#email").val(),
+                Skills: selectedvals,
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("EmployeeDetails","Employee")",
+                data: obj,
+                dataType: 'json',
+                success: function (resp) {
+
+                    if (resp.msg == 'success') {
+                        var td1 = resp.data.FirstName;
+                        $("#td1").append(td1 + '<br/>');
+
+                        var td2 = resp.data.LastName;
+                        $("#td2").append(td2 + '<br/>');
+
+                        var td3 = resp.data.Gender;
+                        $("#td3").append(td3 + '<br/>');
+
+                        var td4 = resp.data.Email;
+                        $("#td4").append(td4 + '<br/>');
+
+                        var td5 = resp.data.Skills;
+                        $("#td5").append(td5 + '<br/>');
+
+                        //$("#td5").html('');
+                        // alert(resp.data.FirstName)
+                    }
+                    else if (resp.msg == 'invalid') {
+                        alert("This email is not available in our database!!")
+                    }
+
+                },
+
+                error: function (resp) {
+                    alert("Error occurred while processing your Request")
+                }
+
+              });
+        }
+    </script>
+
+}
