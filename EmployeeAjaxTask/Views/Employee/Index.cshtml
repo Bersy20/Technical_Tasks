@@ -1,4 +1,4 @@
-﻿@model EmployeeAjaxTask.Models.EmpDetails
+﻿@model IEnumerable<EmployeeAjaxTask.Models.EmpDetails>
 @{
     ViewBag.Title = "Employee Info";
 }
@@ -48,10 +48,9 @@
         <th>Gender</th>
         <th>Email</th>
         <th>Skills</th>
-
     </tr>
-    <tr>
-        
+
+    @*<tr>
         <td id="td1">
         </td>
         <td id="td2">
@@ -63,7 +62,7 @@
         <td id="td5">
         </td>
 
-    </tr>
+    </tr>*@
 </table>
 
 @section scripts{
@@ -92,29 +91,38 @@
                 data: obj,
                 dataType: 'json',
                 success: function (resp) {
-
+                   
                     if (resp.msg == 'success') {
 
                         $("#tbl").css("display", "block");
                         $("#tblname").css("display", "block");
+                        var len = Object.keys(resp).length;
+                       
+                        for (var i = 1; i < len; i++) {
+                            var row = $('<tr><td>' + resp.data.FirstName + '</td><td>' +
+                                resp.data.LastName + '</td><td>' +
+                                resp.data.Gender + '</td><td>' +
+                                resp.data.Email + '</td><td>' +
+                                resp.data.Skills + '</td></tr>');
+                            $('#tbl').append(row)
 
-                        var td1 = resp.data.FirstName;
-                        $("#td1").append(td1 + '<br/>');
+                            //var td1 = resp.data.FirstName;
+                            //$("#td1").append(td1 + '<br/>');
 
-                        var td2 = resp.data.LastName;
-                        $("#td2").append(td2 + '<br/>');
+                            //var td2 = resp.data.LastName;
+                            //$("#td2").append(td2 + '<br/>');
 
-                        var td3 = resp.data.Gender;
-                        $("#td3").append(td3 + '<br/>');
+                            //var td3 = resp.data.Gender;
+                            //$("#td3").append(td3 + '<br/>');
 
-                        var td4 = resp.data.Email;
-                        $("#td4").append(td4 + '<br/>');
+                            //var td4 = resp.data.Email;
+                            //$("#td4").append(td4 + '<br/>');
 
-                        var td5 = resp.data.Skills;
-                        $("#td5").append(td5 + '<br/>');
+                            //var td5 = resp.data.Skills;
+                            //$("#td5").append(td5 + '<br/>');
 
-                        //$("#td5").html('');
-                        // alert(resp.data.FirstName)
+                            
+                        }
                     }
                     else if (resp.msg == 'invalid') {
                         alert("This email is not available in our database!!")
