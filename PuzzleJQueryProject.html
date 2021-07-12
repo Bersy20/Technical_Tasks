@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Memory Game</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Let's Play the Game !</h1>
+<table>
+<tr>
+<td><input style='background-color:black' type= "button" id="b1" value=1 class="Sample" ></td>
+<td ><input style='background-color:black' type= "button" id="b2" value=1 class="Sample"></td>
+<td><input style='background-color:black' type= "button" id="b3" value=2 class="Sample"></td>
+<td><input style='background-color:black' type= "button" id="b4" value=2 class="Sample"></td>
+</tr>
+<tr>
+<td><input style='background-color:black' type= "button" id="b5" value=3 class="Sample"></td>
+<td><input style='background-color:black' type= "button" id="b6" value=3 class="Sample"></td>
+<td><input style='background-color:black' type= "button" id="b7" value=4 class="Sample"></td>
+<td><input style='background-color:black' type= "button" id="b8" value=4 class="Sample"></td>
+</tr>
+<tr>
+<td><input style='background-color:black' type= "button" id="b9" value=5 class="Sample"></td>
+<td><input style='background-color:black' type= "button" id="b10" value=5 class="Sample"></td>
+<td ><input style='background-color:black' type= "button" id="b11" value=6 class="Sample"></td>
+<td><input style='background-color:black' type= "button" id="b12" value=6 class="Sample"></td>
+</tr>
+<tr>
+<td ><input style='background-color:black' type= "button" id="b13" value=7 class="Sample"></td>
+<td ><input style='background-color:black' type= "button" id="b14" value=7 class="Sample"></td>
+<td ><input style='background-color:black' type= "button" id="b15" value=8 class="Sample"></td>
+<td ><input style='background-color:black' type= "button" id="b16" value=8 class="Sample"></td>
+</tr>
+
+<table>
+<br/>
+<input type="button" id="Reset" value="Reset" onclick="Reset()">
+</body>
+</html>
+<script>
+
+
+var isCompare = false, oldId = "", oldVal = "";
+
+    $(".Sample").click(function(event)
+	{	
+              if(isCompare)
+              {
+                isCompare = false;
+				
+				var colorbg=$('#'+event.target.id).css("background-color");
+				
+				$("#"+oldId).css("background-color","black");
+				
+                if(oldVal == event.target.value && $("#"+event.target.id).css("background-color")=="rgb(0, 0, 0)")
+                {
+					if(oldId!=event.target.id)
+					{
+						$("#"+oldId).css("background-color","green");
+
+						$("#"+event.target.id).css("background-color","green");               
+					}
+					else if(oldId==event.target.id  && colorbg==("rgb(0, 128, 0)"))		
+					{
+						$("#"+oldId).css("background-color",colorbg);
+
+						$("#"+event.target.id).css("background-color",colorbg); 
+
+						isCompare=true;
+					}								
+                }							
+              }
+
+              else
+              {
+
+                 oldVal = event.target.value;
+				 
+                 oldId = event.target.id;
+				 
+				 var color=$("#"+oldId).css("background-color");
+				 
+				 if(color=="rgb(0, 0, 0)")
+				 {
+				 
+					$("#"+oldId).css("background-color","blue");
+				 
+					isCompare = true;
+				 }
+				else
+				{
+					isCompare=false;
+				}
+             }
+
+  });
+  
+ function Reset()
+ {
+	$(".Sample").css("background-color","black");
+ }
+</script>
