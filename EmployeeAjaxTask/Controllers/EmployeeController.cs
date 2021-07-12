@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using EmployeeAjaxTask.Models;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using EmployeeAjaxTask.Models;
 
 namespace EmployeeAjaxTask.Controllers
 {
@@ -19,13 +19,12 @@ namespace EmployeeAjaxTask.Controllers
             email.Add("tharun@gmail.com");
             email.Add("varun@gmail.com");
 
-            for (int i = 0; i < 5; i++)
+            var IsExists = email.Contains(empDetails.Email);
+            if (IsExists)
             {
-                if(empDetails.Email==email[i])
-                {
-                    return Json(new { msg = "success", data = empDetails }, JsonRequestBehavior.AllowGet);
-                }
+                return Json(new { msg = "success", data = empDetails }, JsonRequestBehavior.AllowGet);
             }
+
             return Json(new { msg = "invalid" }, JsonRequestBehavior.AllowGet);
         }
     }

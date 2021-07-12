@@ -1,0 +1,27 @@
+﻿@model IEnumerable<EFwithLINQProjectTask.Models.MaxPriceMonthWise>
+@{
+    ViewBag.Title = "Maximum Order Price Month Wise";
+}
+<center>
+    <h2>
+        Maximum Order Price Month Wise
+    </h2>
+    <br />
+    <br />
+    <table class="table">
+        <tr>
+            <th>Date Of Purchase</th>
+            <th>POID</th>
+            <th>Price</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.DateOfPurchase.ToString("MMMM")- @item.DateOfPurchase.Year</td>
+                <td>@item.POID.POID</td>
+
+                <td>@item.Price</td>
+            </tr>
+        }
+    </table>
+</center>

@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<label>Country : </label>
+<select id="country" name="country" class="form-control" onclick="state()">
+</select>
+<label>State : </label>
+<select id="state" name="state" class="form-control" onclick="district()">
+</select>
+<label>District : </label>
+<select id="district" name="district" class="form-control">
+</select>
+@section scripts{
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("#country").html('');
+                $.ajax({
+                    url: "@Url.Action("GetCountry","Home")",
+                    success: function (result) {
+                        for (var i = 0; i < result.length; i++) {
+                            var option = '<option>' + result[i].Country + '</option>';
+                            $("#country").append(option)
+                        }
+
+                    },
+                    error: function (err) { }
+                });
+            });
+
+        function state() {
+
+            $("#state").html('');
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetState", "Home")",
+                data: { Country: $("#country").val() },
+                dataType: 'json',
+                success: function (resp) {
+
+                    if (resp.msg == 'success') {
+                        for (var i = 0; i < resp.data.length; i++) {
+                            var option = '<option>' + resp.data[i].State + '</option>';
+                            $("#state").append(option)
+                        }
+                    }
+
+                },
+
+                error: function (resp) {
+                    alert("Error")
+                }
+
+            });
+
+        }
+        function district() {
+
+            $("#district").html('');
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetDistrict", "Home")",
+                data: { State: $("#state").val() },
+                dataType: 'json',
+                success: function (resp) {
+
+                    if (resp.msg == 'success') {
+                        for (var i = 0; i < resp.data.length; i++) {
+                            var option = '<option>' + resp.data[i].District + '</option>';
+                            $("#district").append(option)
+                        }
+                    }
+
+                },
+
+                error: function (resp) {
+                    alert("Error")
+                }
+
+            });
+        }
+    </script>
+}
